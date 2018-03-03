@@ -1,4 +1,7 @@
-image: 'ruby:alpine'
+image: 'ruby:latest'
+
+before_script:
+  - apt-get update && apt-get install -y git
 
 stages:
   - build
@@ -8,7 +11,6 @@ stages:
 build:
   stage: build
   script:
-    - gem install --force --local eisiges-di-core-0.1.0.gem
     - bundle install
     - gem build eisiges-di-provider-rails.gemspec
   artifacts:
@@ -19,14 +21,14 @@ build:
 test:
   stage: test
   script:
-    - gem install --force --local eisiges-di-core-0.1.0.gem
     - bundle install
     - bundle exec rake test
 
 deploy:
   stage: deploy
   script:
-    - echo "Run deployment script here"
+    - gem install geminabox
+    - gem inabox --host 'http://gems.mccollum.enterprises' eisiges-di-provider-rails-*.gem
   only:
     - master
 
