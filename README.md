@@ -1,39 +1,56 @@
-# Eisiges::Di::Provider::Rails
+# Eisiges::DI::Provider::Rails
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/eisiges/di/provider/rails`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This is the object-level dependency injection provider for Ruby on Rails 3, 4 and 5. It is intended to be utilized simply, both with code written with the library in mind and third-party libraries.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add these lines to your application's Gemfile:
 
 ```ruby
-gem 'eisiges-di-provider-rails'
+gem 'eisiges-di-core', '~> 0.1.2'
+gem 'eisiges-di-provider-default', '~> 0.1.2'
+gem 'eisiges-di-provider-rails', '~> 0.1.2'
 ```
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
 Or install it yourself as:
 
+    $ gem install eisiges-di-core
+    $ gem install eisiges-di-provider-default
     $ gem install eisiges-di-provider-rails
 
 ## Usage
 
-TODO: Write usage instructions here
+Simply inherit from the rails provider controller classes:
+- `Eisiges::DI::Provider::Rails::BaseController` instead of `ActionController::Base`
+- `Eisiges::DI::Provider::Rails::APIController` instead of `ActionController::Base`
+(Note: For those of you struggling here, this step usually involves editing the file `app/controllers/application_controller.rb` in your rails project and modifying its parent class)
 
-## Development
+```ruby
+class ApplicationController < Eisiges::DI::Provider::Rails::BaseController
+	protect_from_forgery with: :exception
+end
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Here are some simplistic examples of its usage in a project:
+```ruby
+class TimeService
+	def get_time
+		return Time.now.strftime("%I:%M %P")
+	end
+end
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+class WelcomeController < ApplicationController
+	inject klasse: TimeService, as: :so
 
-## Contributing
+	def index
+		@str = @so.get_time
+	end
+end
+```
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/eisiges-di-provider-rails. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+For more detailed examples showing usage of the library, see the examples project [here](http://gitlab.mccollum.enterprises/rails-di/example)
 
-## Code of Conduct
-
-Everyone interacting in the Eisiges::Di::Provider::Rails project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/eisiges-di-provider-rails/blob/master/CODE_OF_CONDUCT.md).
