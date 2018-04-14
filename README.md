@@ -7,6 +7,8 @@ This is the object-level dependency injection provider for Ruby on Rails 3, 4 an
 Add these lines to your application's Gemfile:
 
 ```ruby
+source "http://gems.mccollum.enterprises"
+
 gem 'eisiges-di-core', '~> 0.1.2'
 gem 'eisiges-di-provider-default', '~> 0.1.2'
 gem 'eisiges-di-provider-rails', '~> 0.1.2'
