@@ -28,7 +28,15 @@ deploy:
   stage: deploy
   script:
     - gem install geminabox
-    - gem inabox --host 'http://gems.mccollum.enterprises' eisiges-di-provider-rails-*.gem
+    - gem inabox --host 'http://gems.mccollum.enterprises' --overwrite eisiges-di-provider-rails-*.gem
+    - git clone "$CI_REPOSITORY_URL" g-eisiges-di-provider-rails
+    - cd g-eisiges-di-provider-rails
+    - git config user.email "kg6zvp@gmail.com"
+    - git config user.name "Sam McCollum"
+    - git remote add github "https://kg6zvp:$GITHUB_PERSONAL_ACCESS_TOKEN@github.com/kg6zvp/eisiges-di-provider-rails.git"
+    - git push --force github master
+    - cd ..
+    - rm -rf g-eisiges-di-provider-rails
   only:
     - master
 

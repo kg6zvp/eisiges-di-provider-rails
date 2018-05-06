@@ -20,9 +20,9 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install eisiges-di-core
-    $ gem install eisiges-di-provider-default
-    $ gem install eisiges-di-provider-rails
+    $ gem install --source 'http://gems.mccollum.enterprises' eisiges-di-core
+    $ gem install --source 'http://gems.mccollum.enterprises' eisiges-di-provider-default
+    $ gem install --source 'http://gems.mccollum.enterprises' eisiges-di-provider-rails
 
 ## Usage
 
