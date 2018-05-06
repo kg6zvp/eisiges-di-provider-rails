@@ -1,6 +1,8 @@
 # Eisiges::DI::Provider::Rails
 
-This is the object-level dependency injection provider for Ruby on Rails 3, 4 and 5. It is intended to be utilized simply, both with code written with the library in mind and third-party libraries.
+This is the object-level dependency injection provider for Ruby on Rails 3, 4 and 5+. It is intended to be utilized simply, both with code written with the library in mind and third-party libraries.
+
+The injected objects are looked up by their class or by a symbol matching the one provided by you in your factory method (see examples [here](http://gitlab.mccollum.enterprises/rails-di/example)).
 
 ## Installation
 
@@ -26,9 +28,13 @@ Or install it yourself as:
 
 ## Usage
 
-Simply inherit from the rails provider controller classes:
+Simply inherit from the rails provider controller classes to bootstrap:
+
+For Rails 5+ only, do:
+- `Eisiges::DI::Provider::Rails::APIController` instead of `ActionController::API`
+
+For all Rails versions >=3 (including 5+), do:
 - `Eisiges::DI::Provider::Rails::BaseController` instead of `ActionController::Base`
-- `Eisiges::DI::Provider::Rails::APIController` instead of `ActionController::Base`
 (Note: For those of you struggling here, this step usually involves editing the file `app/controllers/application_controller.rb` in your rails project and modifying its parent class)
 
 ```ruby
